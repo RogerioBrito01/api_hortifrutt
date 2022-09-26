@@ -10,4 +10,7 @@ export default class Cidade extends BaseModel {
 
   @column()
   public estado_id: number
+
+  @column()
+  public ativo: boolean
 }
