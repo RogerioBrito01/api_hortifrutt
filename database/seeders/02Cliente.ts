@@ -7,7 +7,7 @@ export default class clientesSeeder extends BaseSeeder {
   public async run () {
     // Write your database queries inside the run method
     const user  = await User.create({
-      email:"Cliente@email.com",
+      email:"cliente@email.com",
       password: "123456",
       tipo: "cliente",
     })
