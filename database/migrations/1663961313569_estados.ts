@@ -9,6 +9,7 @@ export default class extends BaseSchema {
       table.string("name",255).notNullable();
       table.string('uf',2).notNullable();
       
+      
     })
   }
 
