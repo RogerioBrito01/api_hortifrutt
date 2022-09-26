@@ -1,3 +1,37 @@
-// import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import User from 'App/Models/User'
 
-export default class AuthController {}
+export default class AuthController {
+  
+   public async login({auth, request,response}:HttpContextContract) {
+    const email = request.input('email')
+    const password = request.input('password')
+    try {
+        const user = await User.findByOrFail("email",email);
+        let expira;
+        switch(expira){
+            case "clientes":
+                expira= "30 days";
+            break;  
+            case "estabelecimento":
+                expira= "7days"  ;
+            break;
+            case "admins":
+                expira = "1year";
+            break;
+            default:
+                expira = "30days"
+        }
+        const token =await auth.use("api").attempt(email,password,{
+            expiresIn:expira,
+            name:user.serialize().email,
+
+        });
+        response.ok(token);
+        
+    } catch (error) {
+        return response.badRequest("Invalid credentials")
+        
+    }
+   }
+}
